@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "required": ["expense_type", "invoices", "travel", "validation"],
+  "properties": {
+    "expense_type": {
+      "type": "string",
+      "enum": ["交通", "住宿", "餐饮", "其他"]
+    },
+    "invoices": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["invoice_number", "invoice_date", "amount"],
+        "properties": {
+          "invoice_number": { "type": "string" },
+          "invoice_date": { "type": "string", "format": "date" },
+          "seller_name": { "type": "string" },
+          "buyer_name": { "type": "string" },
+          "amount": { "type": "number" },
+          "tax_amount": { "type": "number" },
+          "currency": { "type": "string", "default": "CNY" },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+        }
+      }
+    },
+    "travel": {
+      "type": "object",
+      "required": ["start_date", "end_date", "origin", "destination"],
+      "properties": {
+        "start_date": { "type": "string", "format": "date" },
+        "end_date": { "type": "string", "format": "date" },
+        "origin": { "type": "string" },
+        "destination": { "type": "string" },
+        "business_purpose": { "type": "string" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "totals": {
+      "type": "object",
+      "properties": {
+        "total_amount": { "type": "number" },
+        "total_tax_amount": { "type": "number" },
+        "invoice_count": { "type": "integer" }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "required": ["is_complete", "missing_fields", "warnings"],
+      "properties": {
+        "is_complete": { "type": "boolean" },
+        "missing_fields": { "type": "array", "items": { "type": "string" } },
+        "warnings": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}
