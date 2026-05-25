@@ -1,0 +1,73 @@
+{
+  "connectors": [
+    {
+      "name": "download_message_resource",
+      "description": "Download image or file resources from a Feishu message.",
+      "method": "GET",
+      "url": "https://open.feishu.cn/open-apis/im/v1/messages/{message_id}/resources/{file_key}",
+      "auth": "tenant_access_token",
+      "query": {
+        "type": "{resource_type}"
+      },
+      "path_params": ["message_id", "file_key"],
+      "inputs": [
+        { "name": "message_id", "type": "string", "required": true },
+        { "name": "file_key", "type": "string", "required": true },
+        { "name": "resource_type", "type": "string", "required": true, "allowed": ["image", "file"] }
+      ],
+      "outputs": [
+        { "name": "content", "type": "binary" },
+        { "name": "filename", "type": "string" },
+        { "name": "content_type", "type": "string" }
+      ]
+    },
+    {
+      "name": "upload_approval_file",
+      "description": "Upload one file to Feishu Approval and return a file code for approval form controls.",
+      "method": "POST",
+      "url": "https://www.feishu.cn/approval/openapi/v2/file/upload",
+      "auth": "tenant_access_token",
+      "content_type": "multipart/form-data",
+      "inputs": [
+        { "name": "name", "type": "string", "required": true },
+        { "name": "type", "type": "string", "required": true, "allowed": ["image", "attachment"] },
+        { "name": "content", "type": "file", "required": true }
+      ],
+      "outputs": [
+        { "name": "code", "type": "string" },
+        { "name": "url", "type": "string" }
+      ],
+      "limits": {
+        "image_max_mb": 10,
+        "attachment_max_mb": 50,
+        "one_file_per_request": true
+      }
+    },
+    {
+      "name": "create_approval_instance",
+      "description": "Create a native Feishu approval instance after user confirmation.",
+      "method": "POST",
+      "url": "https://open.feishu.cn/open-apis/approval/v4/instances",
+      "auth": "tenant_access_token",
+      "content_type": "application/json; charset=utf-8",
+      "inputs": [
+        { "name": "approval_code", "type": "string", "required": true },
+        { "name": "open_id", "type": "string", "required": false },
+        { "name": "user_id", "type": "string", "required": false },
+        { "name": "department_id", "type": "string", "required": false },
+        { "name": "form", "type": "string", "required": true },
+        { "name": "uuid", "type": "string", "required": true },
+        { "name": "node_approver_open_id_list", "type": "array", "required": false },
+        { "name": "node_cc_open_id_list", "type": "array", "required": false }
+      ],
+      "outputs": [
+        { "name": "instance_code", "type": "string" },
+        { "name": "approval_url", "type": "string" }
+      ],
+      "idempotency": {
+        "field": "uuid",
+        "max_length": 64
+      }
+    }
+  ]
+}
