@@ -1,0 +1,64 @@
+{
+  "tables": [
+    {
+      "name": "报销机器人台账",
+      "description": "每次群消息报销资料的主记录",
+      "fields": [
+        { "name": "记录编号", "type": "auto_number", "required": true },
+        { "name": "状态", "type": "single_select", "required": true, "options": ["received", "files_downloaded", "extracted", "need_more_info", "pending_confirm", "confirmed", "submitted", "failed", "duplicate"] },
+        { "name": "群聊ID", "type": "text", "required": true },
+        { "name": "消息ID", "type": "text", "required": true },
+        { "name": "发送人OpenID", "type": "text", "required": true },
+        { "name": "发送人UserID", "type": "text", "required": false },
+        { "name": "发送时间", "type": "datetime", "required": true },
+        { "name": "附件Key列表", "type": "long_text", "required": true },
+        { "name": "附件文件列表", "type": "attachment", "required": false },
+        { "name": "发票号码列表", "type": "long_text", "required": false },
+        { "name": "发票日期", "type": "date", "required": false },
+        { "name": "费用类型", "type": "single_select", "required": false, "options": ["交通", "住宿", "餐饮", "其他"] },
+        { "name": "金额合计", "type": "currency", "required": false },
+        { "name": "税额合计", "type": "currency", "required": false },
+        { "name": "出差开始日期", "type": "date", "required": false },
+        { "name": "出差结束日期", "type": "date", "required": false },
+        { "name": "出发地", "type": "text", "required": false },
+        { "name": "目的地", "type": "text", "required": false },
+        { "name": "出差说明", "type": "long_text", "required": false },
+        { "name": "AI抽取JSON", "type": "long_text", "required": false },
+        { "name": "置信度", "type": "number", "required": false },
+        { "name": "确认卡片MessageID", "type": "text", "required": false },
+        { "name": "审批实例ID", "type": "text", "required": false },
+        { "name": "审批链接", "type": "url", "required": false },
+        { "name": "错误类型", "type": "single_select", "required": false, "options": ["file_download_failed", "ai_extract_failed", "approval_file_upload_failed", "approval_instance_create_failed", "permission_denied", "invalid_mapping", "unknown"] },
+        { "name": "错误信息", "type": "long_text", "required": false },
+        { "name": "幂等UUID", "type": "text", "required": true },
+        { "name": "创建时间", "type": "created_time", "required": true },
+        { "name": "更新时间", "type": "modified_time", "required": true }
+      ],
+      "unique_keys": ["消息ID", "幂等UUID"]
+    },
+    {
+      "name": "字段映射",
+      "description": "AI 抽取字段到审批控件的映射",
+      "fields": [
+        { "name": "抽取字段", "type": "text", "required": true },
+        { "name": "审批控件ID", "type": "text", "required": true },
+        { "name": "审批控件类型", "type": "single_select", "required": true, "options": ["input", "textarea", "number", "amount", "date", "dateInterval", "radioV2", "checkboxV2", "image", "attachment"] },
+        { "name": "是否必填", "type": "checkbox", "required": true },
+        { "name": "默认值", "type": "text", "required": false },
+        { "name": "启用", "type": "checkbox", "required": true }
+      ]
+    },
+    {
+      "name": "错误日志",
+      "description": "流程错误和管理员处理记录",
+      "fields": [
+        { "name": "关联消息ID", "type": "text", "required": true },
+        { "name": "错误类型", "type": "text", "required": true },
+        { "name": "错误信息", "type": "long_text", "required": true },
+        { "name": "处理人", "type": "user", "required": false },
+        { "name": "处理状态", "type": "single_select", "required": true, "options": ["open", "resolved", "ignored"] },
+        { "name": "创建时间", "type": "created_time", "required": true }
+      ]
+    }
+  ]
+}
