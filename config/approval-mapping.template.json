@@ -1,0 +1,65 @@
+{
+  "approval": {
+    "approval_code": "REPLACE_WITH_APPROVAL_CODE",
+    "submitter_id_type": "open_id",
+    "department_id_strategy": "use_default_if_single_department",
+    "allow_resubmit": true,
+    "allow_submit_again": false
+  },
+  "idempotency": {
+    "uuid_source_fields": ["message_id", "invoice_numbers", "total_amount"],
+    "uuid_max_length": 64
+  },
+  "form_controls": [
+    {
+      "source": "expense_type",
+      "approval_control_id": "REPLACE_WITH_WIDGET_ID_EXPENSE_TYPE",
+      "approval_control_type": "radioV2",
+      "required": true
+    },
+    {
+      "source": "total_amount",
+      "approval_control_id": "REPLACE_WITH_WIDGET_ID_TOTAL_AMOUNT",
+      "approval_control_type": "number",
+      "required": true
+    },
+    {
+      "source": "invoice_numbers",
+      "approval_control_id": "REPLACE_WITH_WIDGET_ID_INVOICE_NUMBERS",
+      "approval_control_type": "textarea",
+      "required": true
+    },
+    {
+      "source": "travel_date_interval",
+      "approval_control_id": "REPLACE_WITH_WIDGET_ID_TRAVEL_DATE_INTERVAL",
+      "approval_control_type": "dateInterval",
+      "required": true
+    },
+    {
+      "source": "origin",
+      "approval_control_id": "REPLACE_WITH_WIDGET_ID_ORIGIN",
+      "approval_control_type": "input",
+      "required": true
+    },
+    {
+      "source": "destination",
+      "approval_control_id": "REPLACE_WITH_WIDGET_ID_DESTINATION",
+      "approval_control_type": "input",
+      "required": true
+    },
+    {
+      "source": "business_purpose",
+      "approval_control_id": "REPLACE_WITH_WIDGET_ID_BUSINESS_PURPOSE",
+      "approval_control_type": "textarea",
+      "required": true
+    },
+    {
+      "source": "approval_file_codes",
+      "approval_control_id": "REPLACE_WITH_WIDGET_ID_ATTACHMENTS",
+      "approval_control_type": "attachment",
+      "required": true
+    }
+  ],
+  "node_approvers": [],
+  "node_cc": []
+}
